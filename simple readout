@@ -1,0 +1,40 @@
+# Author: Grace Champagne
+# Date: Nov 23, 2023
+
+# simple readout without uploading values
+
+import time
+# board and busio are from adafruit circuit python
+import board
+import busio
+import adafruit_ads1x15.ads11115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
+import functions #for lights
+
+# create i2c bus
+i2c = busio.I2C(board.SCL, board.SDA)
+
+# create ADC object using i2c bus
+ads1 = ADS.ADS1115(i2c, address = int(0x48)) 
+ads2 = ADS.ADS1115(i2c, address = int(0x49)) #ADDR shorted to VDD
+
+
+# connected to channel 0 (A0 pin)
+chan1 = AnalogIn(ads1, ADS.P0)
+chan2 = AnalogIn(ads2, ADS.P1)
+
+
+#read values and convert to psig (loop)
+while True:
+    exhaustpressure = [] # in psig
+    for i in range(3.3):
+        exhaustpressure.append(((chan1[i].voltage*3.0)*20)) 
+
+    gaspressure = [] # in psig
+    for i in range(3.3):
+        gaspressure.append(((chan2[i].voltage*3.0)*11.175-11.175))  
+
+    functions.lights(gaspressure, exhaustpressure)  #lights function
+    functions.email (exhaustpressure, gaspressure)  # notifying email
+
+    time.sleep(30) # time intervals in seconds

@@ -1,0 +1,11 @@
+For Rpi terminal:
+    User: gchampa Pass: bananas1
+    User: rpi Pass: ra$pb3rr1
+    use sudo shutdown -h now to shutdown safely
+    use ctrl+C to stop command
+    use exit to close terminal
+    go to programming>IDLE to code in python
+
+To break while loop:
+    ctrl+C = KeyboardInterrupt
+    

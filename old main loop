@@ -1,0 +1,67 @@
+
+import time
+import config
+import functions
+import sensors as s
+import bvl_pymongodb
+import threading
+
+
+
+def main_loop():
+    StartTimeExhaust=time.time() #Start and End time will be used to calculate the time ellapsed since the program started
+    StartTimeGas=time.time()
+    print('Starting!')
+    while True:
+        try:
+            
+        #This part uploads the .csv file to the database
+            EndTime=time.time()
+            # Since the exhuast pressure is red more frequently, the timer does not reset after data uploads
+            if (EndTime-StartTimeExhaust)>60*config.Upload_Interval_Exhaust:
+                with open(config.csv_path,'w') as update_log: #this writes the header from functions in the empty .csv file
+                    update_log.write(functions.Header_Exhaust()+'\n')
+                with open(config.csv_path,'a') as update_log:# Writing to the .csv file
+                    update_log.write(functions.data()+'\n')# the new line is to skip a line in the csv file so that all the columns are alligned.
+                print(functions.data_exhaust())
+                StartTimeExhaust = time.time() # reset timer
+                bvl_pymongodb.upload_from_csv(config.dbname,config.collection);#this part uploads it, but then deleted everything in the file
+        
+            # this is for compressed gas
+            if (EndTime-StartTimeGas)>60*config.Upload_Interval_Gas:#The time in minutes between uploads.
+                with open(config.csv_path,'w') as update_log: #this writes the header from functions in the empty .csv file
+                    update_log.write(functions.Header_Gas()+'\n')
+                with open(config.csv_path,'a') as update_log:# Writing to the .csv file
+                    update_log.write(functions.data_gas()+'\n')# the new line is to skip a line in the csv file so that all the columns are alligned.
+                print(functions.data_gas())
+                bvl_pymongodb.upload_from_csv(config.dbname,config.collection);#this part uploads it, but then deleted everything in the file
+                StartTime=time.time()#this resets the timer
+                print('Uploaded!')
+        
+            if config.leds==1:
+                functions.lights(s.exhaustpressure(),s.gaspressure())
+            if config.email==1:
+                functions.email(s.exhaustpressure(),s.gaspressure())
+            else:
+                time.sleep(60*config.Interval_Between_Scans)#The time in minutes that the user chose to have between readings. Also the rate at which the uploading time increases by.
+             
+        except KeyboardInterrupt:#uploads everything once we close the program
+            print('Closing down')
+            with open(config.csv_path,'w') as update_log:# so then this part rewrites a new header for the file
+                update_log.write(functions.Header_All()+'\n')
+            with open(config.csv_path,'a') as update_log:
+                update_log.write(functions.data_all()+'\n')# the new line is to skip a line in the csv file so that all the columns are alligned.
+            bvl_pymongodb.upload_from_csv(config.dbname,config.collection);#this part uploads it, but then deleted everything in the file
+            print('Fully uploaded!')
+            break #Closes off the loop.
+    
+        except Exception as error:
+            with open('error_log.txt','a') as error_log:# Writing to the .csv file
+                error_log.write(str(time.ctime())+str(error)+'\n')# the new line is to skip a line in the csv file so that all the columns are alligned.
+                error_log.close()
+            print(error)
+            time.sleep(5)
+
+threading.Thread(target=main_loop).start()
+# Start the Tkinter event loop
+m.mainloop()

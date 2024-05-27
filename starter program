@@ -1,0 +1,72 @@
+# program for when starting up to check if works
+import time
+import RPi.GPIO as GPIO   
+# board and busio are from adafruit - they are newbie friendly but make it harder to trasfer to other boards etc (i think)
+import board
+import busio
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
+
+# create i2c bus
+i2c = busio.I2C(board.SCL, board.SDA)
+
+# create ADC object using i2c bus
+ads1 = ADS.ADS1115(i2c, address = int(0x48)) 
+ads2 = ADS.ADS1115(i2c, address = int(0x49)) #ADDR shorted to VDD
+
+
+# connected to channel 0 (A0 pin)
+chan1 = AnalogIn(ads1, ADS.P0)
+chan2 = AnalogIn(ads2, ADS.P1)
+
+#first try just printing values to check
+print("{:>5}\t{:>5}".format('raw', 'v'))
+
+
+# can also test
+# function for sensor data
+
+# exhaust sensor outputs 1-5V but scaled down to 3.3V
+# multiply by 5/3.3
+scaling = 5/3.3
+def exhaustpressure():
+    exhaust = ((chan1.voltage*scaling)*11.175 - 11.175) 
+    return exhaust
+exhaustpressure()
+# compressed gas sensor outputs 0-5V
+# multiply by 5/3.3
+def gaspressure():
+    gas = ((chan2.voltage*scaling)*20)
+    return gas
+gaspressure()
+# see if these run to sue for teh uploading to the database
+
+# then check module for errors
+# then run module
+ 
+# check LED
+def lights(e, g):
+    LEDRED = 18  # LED GPIO Pin LED
+    LEDGREEN = 17
+
+    GPIO.setmode(GPIO.BCM)          # Use GPIO pin number
+    GPIO.setwarnings(False)         # Ignore warnings in our case
+    GPIO.setup(LEDRED, GPIO.OUT)    # GPIO pin as output pin
+    GPIO.setup(LEDGREEN, GPIO.OUT)
+
+    if g > 100 or g < 0:
+        GPIO.output(LEDRED, GPIO.HIGH)  # Turn on RED LED
+        print('Gas Pressure Out of Range')
+    else:
+        GPIO.output(LEDRED, GPIO.LOW)   # Turn off RED LED
+
+    if e > 30 or e < -14.7:
+        GPIO.output(LEDGREEN, GPIO.HIGH)  # Turn on GREEN LED
+        print('Exhaust Pressure Out of Range')
+    else:
+        GPIO.output(LEDGREEN, GPIO.LOW)   # Turn off GREEN LED
+
+#lights(-20, 10) # should be red
+#lights(-10, 200) # should be red
+#light(0, 20) # should be green
+GPIO.cleanup()

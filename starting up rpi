@@ -1,0 +1,47 @@
+# start in terminal
+# to add user
+sudo usermod -a -G gpio <username>
+# to open up configuration settings use:
+sudo raspi-config
+#to check if i2c is enabled use:
+cat /etc/modules
+cat /boot/config.txt | grep "i2c"
+# to find address
+sudo i2cdetect -y 1
+# to install 12c libraries
+sudo pip3 install RPI.GPIO adafruit-blinka
+sudo pip3 install adafruit-circuitpython-ads1x15
+# to start coding (i'm pretty sure its a more updated version of python)
+sudo idle-python3.7 ldr_read.py
+# for LCD Display
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo apt-get install matchbox-keyboard
+sudo apt-get install raspberrypi-ui-mods
+sudo apt-get install raspberrypi-net-mods
+# for LED
+sudo apt update && sudo apt upgrade
+sudo apt install python-rpi.gpio python3-rpi.gpio
+# to install numpy and pandas
+sudo apt install libatlas3-base
+pip install <module_name>
+modules:
+    numpy
+    os (file system navigation)
+    json (deals with json-to-python conversions)
+    pandas (handles data organization on the python side)
+    csv ( handles csv conversion from python data structures)
+    sshtunnel (handles the creation of the ssh server connection to the MongoDB instance)
+    paramiko (used to import the private key for RSA authentication)
+    pymongo (contains all the functions to interact with the MongoDB instance)
+    datetime (used to format time strings)
+    # couldn't install os, json, csv
+# to see GPIO pins
+pinout
+# to exit
+exit 
+# to shutdown pi safely
+shutdown 
+# to reboot
+sudo shutdown -r now

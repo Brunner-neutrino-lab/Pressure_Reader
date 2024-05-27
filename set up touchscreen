@@ -1,0 +1,41 @@
+## 1. 
+# run following commands (if not alr done)
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo apt-get install matchbox-keyboard
+# keyboard cna be found at Menu -> Accessories-> Keyboard
+sudo apt-get install raspberrypi-ui-mods
+sudo apt-get install raspberrypi-net-mods
+# then powerdown safely
+sudo shutdown
+# can also reboot
+sudo shutdown -r now
+
+## 2.
+# place towel on table and display facedown (to protect)
+# also need screwdriver
+# box should have
+- 4 jumper leads
+- ribbon cable
+- pack of screws
+# may have to attach display board to display
+# insert ribbon cable BLUE SIDE DOWN in display until catch clicks in place
+
+## 3.
+# attach GPIO pins with jumper cables
+red - 5V power
+black - ground
+yellow - SCL
+green -SDA
+# you shouldnt need to use SCL or SDA
+
+## 4.
+# connect to pi via ssh and enter
+sudo nano /boot/config.txt
+# to edit file if screen is rotated improperly add line
+lcd_rotate=2
+# to exit
+ctrl + x
+y
+enter
