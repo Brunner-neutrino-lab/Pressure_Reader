@@ -1,0 +1,3 @@
+[submodule "BvL-MongoDB"]
+	path = BvL-MongoDB
+	url = https://github.com/Brunner-neutrino-lab/BvL-MongoDB.git
