@@ -2,12 +2,14 @@ import time # for time intervals
 import config # the config file
 import functions # fucntions for lights and database
 import sensors as s # functions for sensor data
-import bvl_pymongodb # stuff to upload to database
+import sys
 import threading # for the tkinter loop
 import tkinter as tk # for gui
 import pandas as pd # for datafram (good for handling the data)
 import datetime # for the time now
 
+sys.path.append('bvl-mongodb')
+import bvl_pymongodb
 
 # Create the main window for displaying values
 m = tk.Tk() # creates window (m)
