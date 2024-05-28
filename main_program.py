@@ -1,5 +1,4 @@
 import time # for time intervals
-import config # the config file
 import functions # fucntions for lights and database
 import sensors as s # functions for sensor data
 import sys
