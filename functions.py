@@ -159,7 +159,6 @@ def update_face(exhaust_value, gas_value):
 
 # Function to close the window gracefully
 def on_closing(m):
-    global stopped
     stopped = True
     m.destroy()
 
