@@ -23,10 +23,6 @@ import tkinter as tk # to display data in a seperate window
 import threading
 import time
 
-# initalize variable to stop
-global stopped
-stopped = False
-
 
 def lights(e, g):
     LEDRED = 18  # LED GPIO Pin LED
@@ -156,11 +152,6 @@ def update_face(exhaust_value, gas_value):
         compressed_gas_face_label.config(text="😊")  # Happy face
     else:
         compressed_gas_face_label.config(text="☹️")  # Sad face
-
-# Function to close the window gracefully
-def on_closing(m):
-    stopped = True
-    m.destroy()
 
         
 # clear buffer frame
