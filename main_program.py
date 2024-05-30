@@ -7,7 +7,7 @@ import tkinter as tk # for gui
 import pandas as pd # for datafram (good for handling the data)
 import datetime # for the time now
 
-sys.path.append('bvl-mongodb')
+sys.path.append('BvL-MongoDB')
 import bvl_pymongodb
 
 # Create the main window for displaying values

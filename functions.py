@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO         # Import Raspberry Pi GPIO library
 from time import sleep          # Import the sleep function 
 import sys 
 
-sys.path.append('bvl-mongodb')
+sys.path.append('BvL-MongoDB')
 import bvl_pymongodb
 
 # for uploadng to database
