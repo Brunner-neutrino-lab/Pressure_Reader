@@ -125,14 +125,14 @@ def email(e, g):
 
 # for GUI
 # Function to update values every second
-def update_values():
+def update_values(exh_lbl, compr_gas_lbl, m):
     # Update exhaust and gas values here (example: random values)
     exhaust_value = s.exhaustpressure
     gas_value = s.gaspressure
     
     # Update labels with the new values
-    exhaust_label.config(text="{:.2f}".format(exhaust_value)) # these values are defined in main program
-    compressed_gas_label.config(text="{:.2f}".format(gas_value))
+    exh_lbl.config(text="{:.2f}".format(exhaust_value)) # these values are defined in main program
+    compr_gas_lbl.config(text="{:.2f}".format(gas_value))
     
     # Update happy/sad faces based on pressure range
     update_face(exhaust_value, gas_value)
