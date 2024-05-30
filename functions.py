@@ -1,6 +1,10 @@
 # functions for LEDs and sensors
 import RPi.GPIO as GPIO         # Import Raspberry Pi GPIO library
 from time import sleep          # Import the sleep function 
+import sys 
+
+sys.path.append('bvl-mongodb')
+import bvl_pymongodb
 
 # for uploadng to database
 import bvl_pymongodb
