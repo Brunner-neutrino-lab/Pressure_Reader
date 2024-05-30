@@ -37,7 +37,7 @@ compressed_gas_label.grid(row=1, column=1, padx=10, pady=10)
 #compressed_gas_face_label.grid(row=2, column=1)
 
 # Initialize the variable to control the update loop
-stopped = False
+functions.stopped = False
 
 # Bind the closing event to the on_closing function
 m.protocol("WM_DELETE_WINDOW", functions.on_closing(m))
