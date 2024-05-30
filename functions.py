@@ -23,6 +23,10 @@ import tkinter as tk # to display data in a seperate window
 import threading
 import time
 
+# initalize variable to stop
+global stopped
+stopped = False
+
 
 def lights(e, g):
     LEDRED = 18  # LED GPIO Pin LED
