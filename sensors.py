@@ -7,7 +7,7 @@ import time
 # board and busio are from adafruit circuit python
 import board
 import busio
-import adafruit_ads1x15.ads11115 as ADS
+import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 import functions #for lights
 
