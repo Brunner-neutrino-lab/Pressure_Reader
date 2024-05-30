@@ -43,7 +43,7 @@ stopped = False
 m.protocol("WM_DELETE_WINDOW", functions.on_closing)
 
 # Start updating the values
-functions.update_values()
+functions.update_values(exhaust_label, compressed_gas_label, m)
 
 # there are also headers as functions (optional to use instead)
 dfheader_exhaust=['timestamp','exhaust_psig']
