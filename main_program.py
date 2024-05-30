@@ -40,7 +40,7 @@ compressed_gas_label.grid(row=1, column=1, padx=10, pady=10)
 stopped = False
 
 # Bind the closing event to the on_closing function
-m.protocol("WM_DELETE_WINDOW", functions.on_closing)
+m.protocol("WM_DELETE_WINDOW", functions.on_closing(m))
 
 # Start updating the values
 functions.update_values(exhaust_label, compressed_gas_label, m)
