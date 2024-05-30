@@ -11,7 +11,7 @@ sys.path.append('BvL-MongoDB')
 import bvl_pymongodb
 
 # Function to close the window gracefully
-def on_closing(m):
+def on_closing():
     stopped = True
     m.destroy()
 
