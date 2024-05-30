@@ -10,6 +10,11 @@ import datetime # for the time now
 sys.path.append('BvL-MongoDB')
 import bvl_pymongodb
 
+# Function to close the window gracefully
+def on_closing(m):
+    stopped = True
+    m.destroy()
+
 # Create the main window for displaying values
 m = tk.Tk() # creates window (m)
 m.title('Pressure Values')
