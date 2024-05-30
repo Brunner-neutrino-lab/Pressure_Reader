@@ -86,7 +86,7 @@ def main_loop():
                 else:
                     continue
             # this is for compressed gas
-            if (EndTime-StartTimeGas)<60*bvl_pymongodb.cfg..Upload_Interval_Gas:#The time in minutes between uploads.
+            if (EndTime-StartTimeGas)<60*bvl_pymongodb.cfg.Upload_Interval_Gas:#The time in minutes between uploads.
                 timenow = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # timestamp
                 data = [timenow] # timestamp in first column
                 data.append(s.gaspressure()) # appends to the next column
@@ -97,7 +97,7 @@ def main_loop():
                 bufferDataFrame = bufferDataFrame.append(df_gas.tail(1), ignore_index=True).tail(TerminalBufferSamples)
 
                 # when time exceeds upload interval, uploads to database
-                if (EndTime-StartTimeGas)>=60*bvl_pymongodb.cfg..Upload_Interval_Gas:
+                if (EndTime-StartTimeGas)>=60*bvl_pymongodb.cfg.Upload_Interval_Gas:
                     # sparsify data
                     filtereddf_gas = bvl_pymongodb.sparsify_data(df_gas, bvl_pymongodb.cfg.std_dict)
                     # upload sparsified data
