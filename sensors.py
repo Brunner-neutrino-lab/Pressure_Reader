@@ -20,7 +20,7 @@ ads1 = ADS.ADS1115(i2c, address = int(0x48))
 
 # connected to channel 0 (A0 pin)
 chan1 = AnalogIn(ads1, ADS.P0)
-chan2 = AnalogIn(ads2, ADS.P1)
+chan2 = AnalogIn(ads1, ADS.P1)
 
 
 # function for sensor data
