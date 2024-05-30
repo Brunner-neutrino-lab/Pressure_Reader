@@ -154,7 +154,7 @@ def update_face(exhaust_value, gas_value):
         compressed_gas_face_label.config(text="☹️")  # Sad face
 
 # Function to close the window gracefully
-def on_closing():
+def on_closing(m):
     global stopped
     stopped = True
     m.destroy()
