@@ -125,7 +125,7 @@ def email(e, g):
 
 # for GUI
 # Function to update values every second
-def update_values(exh_lbl, compr_gas_lbl, m):
+def update_values(exh_lbl, compr_gas_lbl, m, stopped):
     # Update exhaust and gas values here (example: random values)
     exhaust_value = s.exhaustpressure()
     gas_value = s.gaspressure()
