@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO         # Import Raspberry Pi GPIO library
 from time import sleep          # Import the sleep function 
 
 # for uploadng to database
-import config #config file
+import bvl_pymongodb
 from datetime import datetime # to get the current time
 
 #for database stuff
@@ -48,41 +48,41 @@ def lights(e, g):
 # since exhaust and gas pressures are not being uploaded at the same intervals, two seperate files are created
 
 def Header_Exhaust(): #The header used when uploading the data to the csv file. 
-    if config.ExhaustStatus == 1:
+    if bvl_pymongodb.cfg.ExhaustStatus == 1:
         statement='timestamp', 'Exhaust_Pressure_psig'
     else:
         statement = 'timestamp'
     return statement
 
 def Header_Gas():
-    if config.GasStatus == 1:
+    if bvl_pymongodb.cfg.GasStatus == 1:
         statement ='timestamp, Gas_Pressure_psig'
     else:
         statement = 'timestamp'
     return statement
 
 def Header_All():
-    if config.ExhaustStatus == 1 and config.GasStatus == 1:
+    if bvl_pymongodb.cfg.ExhaustStatus == 1 and bvl_pymongodb.cfg.GasStatus == 1:
         statement='timestamp, Exhaust_Pressure_psig, Gas_Pressure_psig' #by default we'll always have the time. 
     return statement
 
 #This is how all the data is collected and stringed together. It is properly formated for the bvl-MongoDB script. 
 def data_exhaust():#The data readings from the sensor. 
-    if config.ExhaustStatus==1:
+    if bvl_pymongodb.cfg.ExhaustStatus==1:
         statement = str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")) + str(s.exhaustpressure())
     else:
         statement = str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     return statement
 
 def data_gas():#The data readings from the sensor. 
-    if config.GasStatus==1:
+    if bvl_pymongodb.cfg.GasStatus==1:
         statement = str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")) +str(s.gaspressure())
     else:
         statement=str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     return statement
 
 def data_all():
-    if config.ExhaustStatus==1 and config.GasStatus==1:
+    if bvl_pymongodb.cfg.ExhaustStatus==1 and bvl_pymongodb.cfg.GasStatus==1:
         statement = str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")) +str(s.exhaustpressure())
     else:
         statement = str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))

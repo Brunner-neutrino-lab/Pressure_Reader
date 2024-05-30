@@ -1,5 +1,4 @@
 import time # for time intervals
-import config # the config file
 import functions # fucntions for lights and database
 import sensors as s # functions for sensor data
 import bvl_pymongodb # stuff to upload to database
@@ -64,7 +63,7 @@ def main_loop():
         try:
             EndTime=time.time() # use endtime to get time elasped
             
-            if (EndTime-StartTimeExhaust)<60*config.Upload_Interval_Exhaust:
+            if (EndTime-StartTimeExhaust)<60*bvl_pymongodb.cfg.Upload_Interval_Exhaust:
                 timenow = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # timestamp
                 data = [timenow] # sets the first input to be the timestamp
                 data.append(s.exhaustpressure()) # appends the pressure in the next column
@@ -75,17 +74,17 @@ def main_loop():
                 bufferDataFrame = bufferDataFrame.append(df_exhaust.tail(1), ignore_index=True).tail(TerminalBufferSamples)
 
                 # when time exceeds upload interval, it will upload to database
-                if (EndTime-StartTimeExhaust)>=60*config.Upload_Interval_Exhaust:
+                if (EndTime-StartTimeExhaust)>=60*bvl_pymongodb.cfg.Upload_Interval_Exhaust:
                     # sparsify data
-                    filtereddf_exhaust = bvl_pymongodb.sparsify_data(df_exhaust, config.std_dict)
-                    filtereddf_exhaust.to_csv(config.csv_path, index=False)
-                    bvl_pymongodb.upload_from_csv(config.dbname,config.collection_exhaust)#this part uploads it, but then deleted everything in the file
+                    filtereddf_exhaust = bvl_pymongodb.sparsify_data(df_exhaust, bvl_pymongodb.cfg.std_dict)
+                    filtereddf_exhaust.to_csv(bvl_pymongodb.cfg.csv_path, index=False)
+                    bvl_pymongodb.upload_from_csv(bvl_pymongodb.cfg.dbname,bvl_pymongodb.cfg.collection_exhaust)#this part uploads it, but then deleted everything in the file
                     StartTimeExhaust = time.time() # reset timer
                     print('Exhaust Uploaded!')
                 else:
                     continue
             # this is for compressed gas
-            if (EndTime-StartTimeGas)<60*config.Upload_Interval_Gas:#The time in minutes between uploads.
+            if (EndTime-StartTimeGas)<60*bvl_pymongodb.cfg..Upload_Interval_Gas:#The time in minutes between uploads.
                 timenow = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # timestamp
                 data = [timenow] # timestamp in first column
                 data.append(s.gaspressure()) # appends to the next column
@@ -96,35 +95,35 @@ def main_loop():
                 bufferDataFrame = bufferDataFrame.append(df_gas.tail(1), ignore_index=True).tail(TerminalBufferSamples)
 
                 # when time exceeds upload interval, uploads to database
-                if (EndTime-StartTimeGas)>=60*config.Upload_Interval_Gas:
+                if (EndTime-StartTimeGas)>=60*bvl_pymongodb.cfg..Upload_Interval_Gas:
                     # sparsify data
-                    filtereddf_gas = bvl_pymongodb.sparsify_data(df_gas, config.std_dict)
+                    filtereddf_gas = bvl_pymongodb.sparsify_data(df_gas, bvl_pymongodb.cfg.std_dict)
                     # upload sparsified data
-                    filtereddf_gas.to_csv(config.csv_path, index=False)
-                    bvl_pymongodb.upload_from_csv(config.dbname,config.collection_gas)#this part uploads it, but then deleted everything in the file
+                    filtereddf_gas.to_csv(bvl_pymongodb.cfg.csv_path, index=False)
+                    bvl_pymongodb.upload_from_csv(bvl_pymongodb.cfg.dbname,bvl_pymongodb.cfg.collection_gas)#this part uploads it, but then deleted everything in the file
                     StartTimeGas = time.time() # reset timer
                     print('Gas Uploaded!')
                 else:
                     continue
         
             # apply the led and email functions each scan
-            if config.leds==1:
+            if bvl_pymongodb.cfg.leds==1:
                 functions.lights(s.exhaustpressure(),s.gaspressure())
-            if config.email==1:
+            if bvl_pymongodb.cfg.email==1:
                 functions.email(s.exhaustpressure(),s.gaspressure())
             
             functions.clear_buffer() # clears buffer after 1hr
-            time.sleep(60*config.Interval_Between_Scans)#The time in minutes that the user chose to have between readings. Also the rate at which the uploading time increases by.
+            time.sleep(60*bvl_pymongodb.cfg.Interval_Between_Scans)#The time in minutes that the user chose to have between readings. Also the rate at which the uploading time increases by.
              
         except KeyboardInterrupt: #uploads everything once we close the program
             print('Closing down')
-            filtereddf_exhaust = bvl_pymongodb.sparsify_data(df_exhaust, config.std_dict)
-            filtereddf_exhaust.to_csv(config.csv_path, index=False)
-            bvl_pymongodb.upload_from_csv(config.dbname,config.collection_exhaust)
+            filtereddf_exhaust = bvl_pymongodb.sparsify_data(df_exhaust, bvl_pymongodb.cfg.std_dict)
+            filtereddf_exhaust.to_csv(bvl_pymongodb.cfg.csv_path, index=False)
+            bvl_pymongodb.upload_from_csv(bvl_pymongodb.cfg.dbname,bvl_pymongodb.cfg.collection_exhaust)
             
-            filtereddf_gas = bvl_pymongodb.sparsify_data(df_exhaust, config.std_dict)
-            filtereddf_gas.to_csv(config.csv_path, index=False)
-            bvl_pymongodb.upload_from_csv(config.dbname,config.collection_gas)
+            filtereddf_gas = bvl_pymongodb.sparsify_data(df_exhaust, bvl_pymongodb.cfg.std_dict)
+            filtereddf_gas.to_csv(bvl_pymongodb.cfg.csv_path, index=False)
+            bvl_pymongodb.upload_from_csv(bvl_pymongodb.cfg.dbname,bvl_pymongodb.cfg.collection_gas)
                    
             print('Fully uploaded!')
             break #Closes off the loop.
