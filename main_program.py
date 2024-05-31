@@ -11,7 +11,8 @@ sys.path.append('BvL-MongoDB')
 import bvl_pymongodb
 
 # Function to close the window gracefully
-def on_closing(m):
+def on_closing(stopped):
+    global stopped
     stopped = True
     m.destroy()
 
@@ -42,10 +43,10 @@ compressed_gas_label.grid(row=1, column=1, padx=10, pady=10)
 #compressed_gas_face_label.grid(row=2, column=1)
 
 # Initialize the variable to control the update loop
-functions.stopped = False
+stopped = False
 
 # Bind the closing event to the on_closing function
-m.protocol("WM_DELETE_WINDOW", on_closing(m))
+m.protocol("WM_DELETE_WINDOW", on_closing(stopped))
 
 # Start updating the values
 functions.update_values(exhaust_label, compressed_gas_label, m, stopped)
