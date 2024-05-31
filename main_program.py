@@ -57,13 +57,14 @@ dfheader_gas=['timestamp','compressed_gas_psig']
 df_exhaust=pd.DataFrame(columns=dfheader_exhaust)
 df_gas=pd.DataFrame(columns=dfheader_gas)
 # Merging only the timestamp column from df_exhaust and the second column from df_gas
-global bufferDataFrame = pd.DataFrame({'timestamp': df_exhaust['timestamp'], 
+bufferDataFrame = pd.DataFrame({'timestamp': df_exhaust['timestamp'], 
                                 'exhaust_psig': df_exhaust.iloc[:, 1], 
                                 'compressed_gas_psig': df_gas.iloc[:, 1]})
 
 TerminalBufferSamples=int(60*60) # one hour
 
 def main_loop():
+    global bufferDataFrame
     StartTimeExhaust=time.time() #Start and End time will be used to calculate the time ellapsed since the program started
     StartTimeGas=time.time()
     print('Starting!')
