@@ -122,25 +122,7 @@ def email(e, g):
         send_email("grace.champagne@mail.mcgill.ca", message)
     else:
         print("All good!")
-
-# for GUI
-# Function to update values every second
-def update_values(exh_lbl, compr_gas_lbl, m, stopped):
-    # Update exhaust and gas values here (example: random values)
-    exhaust_value = s.exhaustpressure()
-    gas_value = s.gaspressure()
-    
-    # Update labels with the new values
-    exh_lbl.config(text="{:.2f}".format(exhaust_value)) # these values are defined in main program
-    compr_gas_lbl.config(text="{:.2f}".format(gas_value))
-    
-    # Update happy/sad faces based on pressure range
-    # update_face(exhaust_value, gas_value)
-    
-    # Schedule the next update after 1000 milliseconds (1 second)
-    if not stopped:
-        m.after(10000, update_values(exh_lbl, compr_gas_lbl, m, stopped)) # m is the tkinter window defined in the main program
-
+        
 # Function to update happy/sad faces based on pressure range
 def update_face(exhaust_value, gas_value):
     if -14.7 <= exhaust_value <= 30:
