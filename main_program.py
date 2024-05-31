@@ -120,7 +120,7 @@ def main_loop():
             if bvl_pymongodb.cfg.email==1:
                 functions.email(s.exhaustpressure(),s.gaspressure())
             
-            functions.clear_buffer() # clears buffer after 1hr
+            bufferDataframe = functions.clear_buffer(bufferDataframe) # clears buffer after 1hr
             time.sleep(60*bvl_pymongodb.cfg.Interval_Between_Scans)#The time in minutes that the user chose to have between readings. Also the rate at which the uploading time increases by.
              
         except KeyboardInterrupt: #uploads everything once we close the program
