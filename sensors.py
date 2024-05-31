@@ -32,10 +32,12 @@ chan2 = AnalogIn(ads1, ADS.P1)
 scaling = 5/3.3
 def exhaustpressure():
     exhaust = ((chan1.voltage*scaling)*11.175 - 11.175) 
+    time.sleep(1)
     return exhaust
 
 # compressed gas sensor outputs 0-5V
 # multiply by 5/3.3
 def gaspressure():
     gas = ((chan2.voltage*scaling)*20)
+    time.sleep(1)
     return gas
