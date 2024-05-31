@@ -13,9 +13,11 @@ import functions #for lights
 
 # create i2c bus
 i2c = busio.I2C(board.SCL, board.SDA)
+time.sleep(1)
 
 # create ADC object using i2c bus
 ads1 = ADS.ADS1115(i2c, address = int(0x48)) 
+time.sleep(1)
 
 
 # connected to channel 0 (A0 pin)
