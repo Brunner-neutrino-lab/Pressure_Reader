@@ -159,8 +159,7 @@ def update_face(exhaust_value, gas_value):
 MAX_BUFFER_DURATION = 3600
 
 # Function to clear the bufferDataFrame after 1 hour (tested and works)
-def clear_buffer():
-    global bufferDataFrame
+def clear_buffer(bufferDataframe):
     if len(bufferDataFrame) > 0:
         # Get the timestamp of the earliest entry in the bufferDataFrame
         earliest_timestamp = bufferDataFrame['timestamp'].min()
@@ -172,3 +171,4 @@ def clear_buffer():
         if time_diff >= MAX_BUFFER_DURATION:
             # Remove entries older than 1 hour
             bufferDataFrame = bufferDataFrame[bufferDataFrame['timestamp'] >= (current_time - datetime.timedelta(seconds=MAX_BUFFER_DURATION))]
+    return bufferDataframe
