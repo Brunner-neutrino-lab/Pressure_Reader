@@ -144,7 +144,7 @@ def main_loop():
             time.sleep(5)
 
 # by threading the loops, the GUI and database uploading will not interrupt eachother
-# threading.Thread(target=main_loop).start()
+threading.Thread(target=main_loop).start()
 
 # Start the Tkinter event loop
 m.mainloop()
