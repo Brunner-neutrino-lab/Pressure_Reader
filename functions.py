@@ -128,7 +128,9 @@ def email(e, g):
 def update_values(exh_lbl, compr_gas_lbl, m, stopped):
     # Update exhaust and gas values here (example: random values)
     exhaust_value = s.exhaustpressure()
+    sleep(1)
     gas_value = s.gaspressure()
+    sleep(1)
     
     # Update labels with the new values
     exh_lbl.config(text="{:.2f}".format(exhaust_value)) # these values are defined in main program
