@@ -139,7 +139,7 @@ def update_values(exh_lbl, compr_gas_lbl, m, stopped):
     
     # Schedule the next update after 1000 milliseconds (1 second)
     if not stopped:
-        m.after(1000, update_values(exh_lbl, compr_gas_lbl, m, stopped)) # m is the tkinter window defined in the main program
+        m.after(10000, update_values(exh_lbl, compr_gas_lbl, m, stopped)) # m is the tkinter window defined in the main program
 
 # Function to update happy/sad faces based on pressure range
 def update_face(exhaust_value, gas_value):
